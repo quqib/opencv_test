@@ -1,3 +1,28 @@
+from retrying import retry
+import requests
+
+from datetime import datetime
+print(str(datetime.now().date()) + ' 00:00:00')
+print(type(datetime.now().date()))
+
+exit()
+@retry(stop_max_attempt_number=3)
+def fetch_data():
+    print("Trying to fetch...")
+    res = requests.get("http://httpbin.org/status/500")  # 模拟服务器错误
+    if 1 == 1:
+        raise
+    res.raise_for_status()
+    return res.json()
+
+# 调用
+try:
+    fetch_data()
+except Exception as e:
+    print(f"最终失败了，异常是：{e}")
+
+
+exit()
 import cv2
 
 model_path = 'face_detection_yunet_2023mar_int8.onnx'
